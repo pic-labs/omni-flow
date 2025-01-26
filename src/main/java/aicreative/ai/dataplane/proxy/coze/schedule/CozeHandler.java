@@ -37,7 +37,7 @@ public class CozeHandler {
     public String request(String workflowId, Object param) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.set("token", cozeApiToken);
+        headers.set("Authorization", String.format("Bearer %s", cozeApiToken));
 
         Map<String, Object> body = new HashMap<>();
         body.put("workflow_id", workflowId);
@@ -59,7 +59,7 @@ public class CozeHandler {
     public CozeResponse queryResult(String workflowId, String executeId) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.set("token", cozeApiToken);
+        headers.set("Authorization", String.format("Bearer %s", cozeApiToken));
 
         HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
 

@@ -29,7 +29,7 @@ public class CozeScheduledTask {
 
     private final List<String> taskTypes = List.of("CozeWorkflow");
 
-    @Scheduled(fixedDelay = 1000)
+    @Scheduled(fixedDelay = 5000)
     public void triggerTask() {
         taskTypes.forEach(type -> {
             final TaskHandler.TaskInfo taskInfo = taskHandler.fetchTask(TaskType.valueOf(type));
@@ -41,13 +41,14 @@ public class CozeScheduledTask {
         });
     }
 
-    @Scheduled(fixedDelay = 1000)
+    @Scheduled(fixedDelay = 5000)
     public void checkTaskResult() {
         taskTypes.forEach(this::doCheckTaskResult);
     }
 
     private void doTask(String type, String workflowId, String taskId, Object param) {
         try {
+            log.info("Request Coze, taskId:{}, workflowId:{}", taskId, workflowId);
             String executionId = cozeHandler.request(workflowId, param);
 
             final CozeTask ct = new CozeTask();
@@ -57,6 +58,7 @@ public class CozeScheduledTask {
             ct.setExecutionId(executionId);
             cozeTaskRepository.save(ct);
         } catch (Exception e) {
+            log.warn("Request Coze failed, taskId:{}, type:{}, workflowId:{}, param:{}", taskId, type, workflowId, param, e);
             resultHandler.replyFailed(taskId, TaskType.fromName(type), e.getMessage());
         }
     }
@@ -70,11 +72,11 @@ public class CozeScheduledTask {
             switch (resp.getStatus()) {
                 case Success:
                     resultHandler.replySuccess(t.getTaskId(), TaskType.fromName(t.getTaskType()), resp.getOutput());
-                    iterator.remove();
+                    cozeTaskRepository.delete(t);
                     break;
                 case Failed:
                     resultHandler.replyFailed(t.getTaskId(), TaskType.fromName(t.getTaskType()), resp.getMessage());
-                    iterator.remove();
+                    cozeTaskRepository.delete(t);
                     break;
             }
         }
