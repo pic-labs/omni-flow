@@ -1,0 +1,27 @@
+flows:
+  - flowId: start
+    function: Start
+    inputs:
+      - name: summary
+
+  - flowId: cozeTts
+    function: CozeWorkflow
+    inputs:
+      - name: input
+        value:
+          type: SPEL
+          content: "#start[summary]"
+    ext:
+      workflowId: your-workflow-id
+    depends:
+      - start
+
+  - flowId: end
+    function: End
+    inputs:
+      - name: voice
+        value:
+          type: SPEL
+          content: "#cozeTts[output]"
+    depends:
+      - cozeTts

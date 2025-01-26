@@ -1,0 +1,26 @@
+spring:
+  application.name: create-controller
+  data:
+    redis:
+      host: "127.0.0.1"
+      port: 6379
+      password: ""
+      database: 0
+  jackson:
+    serialization:
+      FAIL_ON_EMPTY_BEANS: false
+logging:
+  level:
+    aicreative.ai: DEBUG
+  file:
+    path: ./var/log
+task:
+  exec-strategy:
+    task-type-strategy-map:
+      CozeWorkflow:
+        retry-cnt: 1
+        timeout: 600000
+proxy:
+  coze:
+    api:
+      token: your-api-token
