@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>aicreative.ai</groupId>
-	<artifactId>create-controller</artifactId>
+	<artifactId>omni-flow</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>create-controller</name>
+	<name>omni-flow</name>
 	<description>Video generation controller</description>
 	<url/>
 	<licenses>
