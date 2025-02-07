@@ -32,7 +32,7 @@ To run this project, you need the following environment:
 docker build -t omni-flow .
 ```
 
-1. Run Docker container:
+2. Run Docker container:
 
 ```shell
 docker run -d --name omni-flow -p 8080:8080 omni-flow
@@ -45,12 +45,12 @@ git clone https://github.com/your-repo/omni-flow.git
 cd omni-flow
 ```
 
-1. Build project:
+2. Build project:
 ```shell
 mvn clean install
 ```
 
-1. Start application:
+3. Start application:
 ```shell
 java -jar target/omni-flow-0.0.1-SNAPSHOT.jar
 ```

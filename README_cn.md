@@ -32,7 +32,7 @@ Omni-Flow 是一个用于编排和调度 AI 能力的控制器，旨在简化 AI
 docker build -t omni-flow .
 ```
 
-1. 运行 Docker 容器：
+2. 运行 Docker 容器：
 
 ```shell
 docker run -d --name omni-flow -p 8080:8080 omni-flow
@@ -46,12 +46,12 @@ git clone https://github.com/your-repo/omni-flow.git
 cd omni-flow
 ```
 
-1. 构建项目：
+2. 构建项目：
 ```shell
 mvn clean install
 ```
 
-1. 启动应用程序：
+3. 启动应用程序：
 ```shell
 java -jar target/omni-flow-0.0.1-SNAPSHOT.jar
 ```
