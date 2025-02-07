@@ -1,5 +1,5 @@
 spring:
-  application.name: create-controller
+  application.name: omni-flow
   data:
     redis:
       host: "127.0.0.1"

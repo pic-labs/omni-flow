@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hello ControlPlane</title>
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/bootstrap-theme.min.css">
+    <script src="./js/jquery-3.1.1.min.js"></script>
+    <script src="./js/bootstrap-3.4.1.min.js"></script>
+    <style>
+        .iframe-container {
+            width: 100%;
+            height: 100vh;
+            border: none;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Please enable Javascript and reload
+    this page!</h2></noscript>
+<div id="main-content" class="container">
+    <div class="row" style="padding-top: 20px">
+        <div class="col-md-12">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="controlplane-tab" data-toggle="tab" href="#controlplane" role="tab" aria-controls="controlplane" aria-selected="true">ControlPlane</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="dataplane-tab" data-toggle="tab" href="#dataplane" role="tab" aria-controls="dataplane" aria-selected="false">Dataplane</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="controlplane" role="tabpanel" aria-labelledby="controlplane-tab">
+                    <iframe class="iframe-container" src="./page/controlplane.html"></iframe>
+                </div>
+                <div class="tab-pane fade" id="dataplane" role="tabpanel" aria-labelledby="dataplane-tab">
+                    <iframe class="iframe-container hidden" src="./page/dataplane.html"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function() {
+        $('#myTab a[href="#controlplane"]').tab('show');
+
+        $('#myTab a').on('click', function (e) {
+            e.preventDefault();
+            $(this).tab('show');
+            $('.iframe-container').addClass('hidden');
+            $($(this).attr('href')).find('.iframe-container').removeClass('hidden');
+        });
+    });
+</script>
+</body>
+</html>
