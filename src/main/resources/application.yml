@@ -24,3 +24,6 @@ proxy:
   coze:
     api:
       token: your-api-token
+  deep-seek:
+    api:
+      key: your-api-key

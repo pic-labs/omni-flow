@@ -1,0 +1,54 @@
+flows:
+  - flowId: start
+    function: Start
+    inputs:
+      - name: news
+
+  - flowId: storyBoard
+    function: DeepSeekWorkflow
+    inputs:
+      - name: messages
+        value:
+          type: SPEL
+          content: |
+            #List.of(#Map.of('role','system','content','You are a news storyboard script splitting tool. Given a news text, you will convert it into a conversational style and then split it into a storyboard script. The output must be in JSON format without any additional tags or code blocks; it should only be pure JSON format.
+            {
+              "shots": [
+                {
+                  "id": "", //Storyboard IDs should be numbered starting from 1, with subsequent IDs incrementing sequentially.
+                  "content": "", //Storyboard Description: Summarize the content corresponding to each storyboard frame, including elements such as the subject, scene, and activities. For example, "Micheal is sitting in the classroom reading a book, holding a book in his hand."
+                  "narration": "" //The corresponding conversational news text for each storyboard frame should not contain double quotes.
+                }
+              ]
+            }
+            
+            Note: 
+            1.The output must strictly follow the JSON format.
+            2.The number of storyboard frames should not be less than 8.'),
+            #Map.of('role','user','content',
+            'News text
+            ```
+            '
+            + #start[news]
+            + '
+            ```'))
+      - name: model
+        value:
+          type: LITERAL
+          content: deepseek-reasoner
+      - name: response_format
+        value:
+          type: SPEL
+          content: "#Map.of('type','text')"
+    depends:
+      - start
+
+  - flowId: end
+    function: End
+    inputs:
+      - name: shots
+        value:
+          type: SPEL
+          content: "#storyBoard[shots]"
+    depends:
+      - storyBoard
