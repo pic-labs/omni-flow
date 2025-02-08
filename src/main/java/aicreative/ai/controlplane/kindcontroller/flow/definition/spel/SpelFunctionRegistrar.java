@@ -7,6 +7,9 @@ import org.springframework.expression.spel.support.ReflectiveMethodResolver;
 import org.springframework.expression.spel.support.StandardEvaluationContext;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.Map;
+
 @Component
 public class SpelFunctionRegistrar {
     @Resource
@@ -19,6 +22,8 @@ public class SpelFunctionRegistrar {
         setFunctionVariable(context, StringUtils.class);
         setFunctionVariable(context, Integer.class);
         setFunctionVariable(context, Math.class);
+        setFunctionVariable(context, List.class);
+        setFunctionVariable(context, Map.class);
     }
 
     private void setFunctionVariable(StandardEvaluationContext context, Object f) {

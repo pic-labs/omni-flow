@@ -39,7 +39,7 @@ public class Fn {
             return new ArrayList<>();
         }
         List<Map<String, Object>> result = new ArrayList<>();
-        //已 list1 为基准， 合并list2
+        //Use list1 as the base and merge list2.
         for (int i = 0; i < list1.size(); i++) {
             if (Objects.isNull(list1.get(i))) {
                 continue;

@@ -59,7 +59,7 @@ public class CreatorController {
         if (page < 1) {
             page = 1;
         }
-        // todo 获取条数应该使用 jpa count 方法，目前暂未调通
+        // todo The number of records should be obtained using the JPA count method, which has not yet been successfully executed.
         int total = kindUserRepository.findAllByUid(uid, null).size();
         if (total == 0) {
             return new Response<>(ResponseCode.Success, Pagination.empty(page, size));

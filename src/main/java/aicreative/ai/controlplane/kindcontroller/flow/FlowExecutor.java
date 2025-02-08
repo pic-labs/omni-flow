@@ -108,7 +108,7 @@ public class FlowExecutor {
                 return;
             }
             result.add(functionTask.getResult());
-            //bizId与task结果关联，方便后续FlowStep使用
+            //Associate bizId with the task result to facilitate subsequent use in FlowStep.
             if (Objects.nonNull(step.getBatchField())) {
                 functionTask.getResult().put(spaces.get(step.getFlowId()).getBatchBizId().getName(),
                         spaces.get(step.getFlowId()).getBatchBizId().getBizIds().get(taskIds.indexOf(taskId)));

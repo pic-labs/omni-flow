@@ -240,7 +240,7 @@ function showError(txt) {
 
     setTimeout(function() {
         alertBox.alert('close');
-    }, 3000); // 3秒后自动隐藏
+    }, 3000); // Automatically hide after 3 seconds.
 }
 
 function showInfo(txt) {
@@ -253,7 +253,7 @@ function showInfo(txt) {
 
     setTimeout(function() {
         alertBox.alert('close');
-    }, 3000); // 3秒后自动隐藏
+    }, 3000); // Automatically hide after 3 seconds.
 }
 
 function sampleCoze() {

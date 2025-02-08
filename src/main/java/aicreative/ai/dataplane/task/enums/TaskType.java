@@ -4,7 +4,8 @@ import java.util.Objects;
 
 public enum TaskType {
 
-    CozeWorkflow;
+    CozeWorkflow,
+    DeepSeekWorkflow;
 
     public static TaskType fromName(String name) {
         for (TaskType taskType : TaskType.values()) {
