@@ -156,6 +156,7 @@ function listKinds(page = currentPage, size = pageSize) {
             }
 
             var kinds = response.data.content;
+            var totalItems = response.data.total;
             var totalPages = response.data.totalPages;
             var tbody = $('#kindListTable tbody');
             tbody.empty();
@@ -175,7 +176,7 @@ function listKinds(page = currentPage, size = pageSize) {
                 searchKind(kindId);
             });
 
-            updatePagination(totalPages);
+            updatePagination(totalPages, totalItems);
         },
         error: function() {
             showError('Failed to fetch kind list.');
@@ -183,7 +184,9 @@ function listKinds(page = currentPage, size = pageSize) {
     });
 }
 
-function updatePagination(totalPages) {
+function updatePagination(totalPages, totalItems) {
+    $('#totalItems').text(`Total Items: ${totalItems}`);
+
     const pagination = $('#pagination');
     pagination.empty();
 
