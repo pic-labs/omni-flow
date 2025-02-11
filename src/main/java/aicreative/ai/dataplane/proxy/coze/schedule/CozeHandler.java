@@ -2,7 +2,6 @@ package aicreative.ai.dataplane.proxy.coze.schedule;
 
 import aicreative.ai.dataplane.proxy.coze.schedule.CozeResponse.Status;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.annotation.Resource;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -29,8 +28,11 @@ public class CozeHandler {
     @Value("${proxy.coze.api.token}")
     private String cozeApiToken;
 
-    @Resource
     private final RestTemplate restTemplate;
+
+    public CozeHandler(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
 
     public String request(String workflowId, Object param) {
         HttpHeaders headers = new HttpHeaders();
