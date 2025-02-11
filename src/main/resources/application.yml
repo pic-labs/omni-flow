@@ -1,11 +1,11 @@
 spring:
-  application.name: omni-flow
+  application.name: create-controller
   data:
     redis:
-      host: "127.0.0.1"
-      port: 6379
-      password: ""
-      database: 0
+      host: "mptest.w.qiyi.redis"
+      port: 6380
+      password: "zMS2OOdbxQU7"
+      database: 9
   jackson:
     serialization:
       FAIL_ON_EMPTY_BEANS: false
@@ -23,8 +23,11 @@ task:
 proxy:
   coze:
     api:
-      app-id: your-app-id
       token: your-api-token
+  huoshan:
+    api:
+      app-id: 6602608726
+      token: KlRIInvV3aDWUhDqePBsbPRYYIFp6nDH
   deep-seek:
     api:
       key: your-api-key

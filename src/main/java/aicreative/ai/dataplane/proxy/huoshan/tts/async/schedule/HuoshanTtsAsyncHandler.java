@@ -26,23 +26,24 @@ public class HuoshanTtsAsyncHandler {
     private static final String RESOURCE_ID = "volc.tts_async.default";
     private static final String EMOTION_RESOURCE_ID = "volc.tts_async.emotion";
 
-    @Value("${proxy.coze.api.app-id}")
-    private String cozeApiAppId;
-    @Value("${proxy.coze.api.token}")
-    private String cozeApiToken;
+    @Value("${proxy.huoshan.api.app-id}")
+    private String huoshanAppId;
+    @Value("${proxy.huoshan.api.token}")
+    private String huoshanApiToken;
 
-    private final RestTemplate restTemplate = new RestTemplate();
+    private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
 
-    public HuoshanTtsAsyncHandler(ObjectMapper objectMapper) {
+    public HuoshanTtsAsyncHandler(RestTemplate restTemplate, ObjectMapper objectMapper) {
+        this.restTemplate = restTemplate;
         this.objectMapper = objectMapper;
     }
 
     public HuoshanTtsAsyncSubmitResponse request(Map<String, Object> params) {
         String url;
         ResponseEntity<String> response;
-        String appid = cozeApiAppId;
-        String token = cozeApiToken;
+        String appid = huoshanAppId;
+        String token = huoshanApiToken;
         String reqid = UUID.randomUUID().toString();
 
         // create headers
@@ -60,6 +61,7 @@ public class HuoshanTtsAsyncHandler {
         // create body
         params.put("appid", appid);
         params.put("reqid", reqid);
+        params.entrySet().removeIf(entry -> entry.getValue() == null);
         HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(params, headers);
 
         // send request
@@ -81,14 +83,14 @@ public class HuoshanTtsAsyncHandler {
 
     public HuoshanTtsAsyncQueryResponse queryResult(HuoshanTtsAsyncTask t) {
         String url;
-        String appid = cozeApiAppId;
-        String token = cozeApiToken;
+        String appid = huoshanAppId;
+        String token = huoshanApiToken;
 
         // create headers
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.set("Authorization", "Bearer; " + token);
-        if (t.getUseEmotion()) {
+        if (t.getUseEmotionApi()) {
             url = String.format(EMOTION_QUERY_URL, appid, t.getExecutionId());
             headers.set("Resource-Id", EMOTION_RESOURCE_ID);
         } else {

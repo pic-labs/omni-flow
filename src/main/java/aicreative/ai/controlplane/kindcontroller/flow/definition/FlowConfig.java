@@ -31,11 +31,13 @@ public class FlowConfig {
     public static class InputConfig {
         private String name;
         private Value value;
+        private String desc;
+        private List<String> enums;
+        private Boolean required;
     }
 
     public enum ValueType {
-        LITERAL,
-        SPEL
+        LITERAL, SPEL
     }
 
     @Data
