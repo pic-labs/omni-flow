@@ -5,7 +5,6 @@ import aicreative.ai.dataplane.proxy.huoshan.tts.async.model.HuoshanTtsAsyncTask
 import aicreative.ai.dataplane.proxy.schedule.ResultHandler;
 import aicreative.ai.dataplane.task.TaskHandler;
 import aicreative.ai.dataplane.task.enums.TaskType;
-import com.alibaba.fastjson.JSON;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -54,10 +53,10 @@ public class HuoshanTtsAsyncScheduledTask {
             t.setTaskId(taskId);
             t.setTaskType(type);
             t.setExecutionId(submitResponse.getTask_id());
-            t.setUseEmotion((int) params.get("use_emotion_api") == 1);
+            t.setUseEmotionApi((int) params.get("use_emotion_api") == 1);
             huoshanTtsAsyncTaskRepository.save(t);
         } catch (Exception e) {
-            log.warn("HuoshanTtsAsyncScheduledTask doTask FAILED, type: {}, taskId: {}, params: {}", type, taskId, JSON.toJSONString(params), e);
+            log.warn("HuoshanTtsAsyncScheduledTask doTask FAILED, type: {}, taskId: {}", type, taskId, e);
             resultHandler.replyFailed(taskId, TaskType.fromName(type), e.getMessage());
         }
     }
@@ -68,7 +67,6 @@ public class HuoshanTtsAsyncScheduledTask {
             HuoshanTtsAsyncQueryResponse response = huoshanTtsAsyncHandler.queryResult(t);
             switch (response.getStatus()) {
                 case Success:
-                    log.info("HuoshanTtsAsyncScheduledTask doCheckTaskResult SUCCESS, taskInfo: {}, resp: {}", JSON.toJSONString(t), JSON.toJSONString(response));
                     Map<Object, Object> result = new HashMap<>();
                     // todo audio_url expires in one hour, save to cloud
                     result.put("output", response.getAudio_url());
@@ -76,12 +74,10 @@ public class HuoshanTtsAsyncScheduledTask {
                     huoshanTtsAsyncTaskRepository.delete(t);
                     break;
                 case Fail:
-                    log.warn("HuoshanTtsAsyncScheduledTask doCheckTaskResult FAILED, taskInfo: {}, resp: {}", JSON.toJSONString(t), JSON.toJSONString(response));
-                    resultHandler.replyFailed(t.getTaskId(), TaskType.fromName(t.getTaskType()), JSON.toJSONString(response));
+                    resultHandler.replyFailed(t.getTaskId(), TaskType.fromName(t.getTaskType()), response.getMessage());
                     huoshanTtsAsyncTaskRepository.delete(t);
                     break;
                 default:
-                    log.debug("HuoshanTtsAsyncScheduledTask doCheckTaskResult RUNNING, taskInfo: {}, resp: {}", JSON.toJSONString(t), JSON.toJSONString(response));
                     break;
             }
         }

@@ -13,5 +13,5 @@ public class HuoshanTtsAsyncTask {
     @Indexed
     private String taskType;
     private String executionId;
-    private Boolean useEmotion;
+    private Boolean useEmotionApi;
 }
