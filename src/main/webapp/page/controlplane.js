@@ -258,10 +258,50 @@ function showInfo(txt) {
 
 function sampleCoze() {
     $('#story').val(`{
-    "uid": "simonzhou",
+    "uid": "your uid here",
     "kindType": "CozeDemo",
     "param": {
         "summary": "Graceful music flows gently through the spacious hall, and the ball is in full swing."
+    }
+}`);
+}
+
+function sampleHuoshanTtsAsync() {
+    $('#story').val(`{
+    "uid": "your uid here",
+    "kindType": "HuoshanTtsAsyncDemo",
+    "param": {
+        "text": "text here",
+        "format": "mp3",
+        "emotion": "happy",
+        "voice_type": "BV700_streaming",
+        "language": "en",
+        "sample_rate": 24000,
+        "volume": 1.0,
+        "speed": 1.0,
+        "pitch": 1.0,
+        "style": "professional",
+        "use_emotion_api": 0
+    }
+}`);
+}
+
+function sampleHuoshanTtsAsyncWithEmotion() {
+    $('#story').val(`{
+    "uid": "your uid here",
+    "kindType": "HuoshanTtsAsyncDemo",
+    "param": {
+        "text": "text here",
+        "format": "mp3",
+        "emotion": "happy",
+        "voice_type": "BV104_streaming",
+        "language": "en",
+        "sample_rate": 24000,
+        "volume": 1.0,
+        "speed": 1.0,
+        "pitch": 1.0,
+        "style": "professional",
+        "use_emotion_api": 1
     }
 }`);
 }
@@ -270,6 +310,8 @@ $(function () {
     $("form").on('submit', (e) => e.preventDefault());
     $( "#createBtn" ).click(() => generate());
     $( "#sampleCozeBtn" ).click(() => sampleCoze());
+    $( "#sampleHuoshanTtsAsyncBtn" ).click(() => sampleHuoshanTtsAsync());
+    $( "#sampleHuoshanTtsAsyncWithEmotionBtn" ).click(() => sampleHuoshanTtsAsyncWithEmotion());
     $( "#searchBtn" ).click(() => searchKind());
     $( "#detailBtn" ).click(() => kindDetail());
     $( "#regenerateBtn" ).click(() => regenerate());

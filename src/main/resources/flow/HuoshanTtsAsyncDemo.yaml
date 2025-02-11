@@ -1,0 +1,75 @@
+flows:
+  - flowId: start
+    function: Start
+    inputs:
+      - name: text
+      - name: format
+      - name: emotion
+      - name: voice_type
+      - name: language
+      - name: sample_rate
+      - name: volume
+      - name: speed
+      - name: pitch
+      - name: style
+      - name: use_emotion_api
+
+  - flowId: huoshanTtsAsync
+    function: HuoshanTtsAsync
+    inputs:
+      - name: text
+        value:
+          type: SPEL
+          content: "#start[text]"
+      - name: format
+        value:
+          type: SPEL
+          content: "#start[format]"
+      - name: emotion
+        value:
+          type: SPEL
+          content: "#start[emotion]"
+      - name: voice_type
+        value:
+          type: SPEL
+          content: "#start[voice_type]"
+      - name: language
+        value:
+          type: SPEL
+          content: "#start[language]"
+      - name: sample_rate
+        value:
+          type: SPEL
+          content: "#start[sample_rate]"
+      - name: volume
+        value:
+          type: SPEL
+          content: "#start[volume]"
+      - name: speed
+        value:
+          type: SPEL
+          content: "#start[speed]"
+      - name: pitch
+        value:
+          type: SPEL
+          content: "#start[pitch]"
+      - name: style
+        value:
+          type: SPEL
+          content: "#start[style]"
+      - name: use_emotion_api
+        value:
+          type: SPEL
+          content: "#start[use_emotion_api]"
+    depends:
+      - start
+
+  - flowId: end
+    function: End
+    inputs:
+      - name: audio
+        value:
+          type: SPEL
+          content: "#huoshanTtsAsync[output]"
+    depends:
+      - huoshanTtsAsync

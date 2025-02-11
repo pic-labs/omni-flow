@@ -23,6 +23,7 @@ task:
 proxy:
   coze:
     api:
+      app-id: your-app-id
       token: your-api-token
   deep-seek:
     api:
