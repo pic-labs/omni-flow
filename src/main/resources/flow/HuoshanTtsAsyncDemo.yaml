@@ -1,0 +1,103 @@
+flows:
+  - flowId: start
+    function: Start
+    inputs:
+      - name: text
+        desc: Synthetic text, less than 100,000 characters in length, supports SSML. The SSML must start with <speak> and end with </speak>, and only one set of <speak> tags is displayed. The supported SSML tags can refer to the SSML markup language
+        required: true
+      - name: format
+        desc: Output audio format
+        enums: [ pcm,wav,mp3,ogg_opus ]
+        required: true
+      - name: voice_type
+        desc: Timbre
+        enums: [ BV701_streaming,BV123_streaming,BV120_streaming,BV119_streaming,BV115_streaming,BV107_streaming,BV100_streaming,BV104_streaming,BV004_streaming,BV113_streaming,BV102_streaming ]
+        required: true
+      - name: use_emotion_api
+        desc: To use api with emotion prediction api or not
+        enums: [ 0,1 ]
+        required: true
+      - name: emotion
+        desc: Only the timbre that supports multi-emotion, multi-style and multi-language can invoke this ability. The multi-emotion and multi-style ability needs to be invoked by configuring emotion
+        enums: [ pleased,sorry,annoyed,happy,sad,angry,scare,hate,surprise,tear,novel_dialog ]
+        required: false
+      - name: language
+        desc: Related to timbre. The default value is `cn`
+        enums: [ cn,en,ja,thth,vivn,id,ptbr,esmx ]
+        required: false
+      - name: sample_rate
+        desc: Sample rate. The default value is `24000`
+        required: false
+      - name: volume
+        desc: The value ranges from 0.1 to 3. The default value is `1`
+        required: false
+      - name: speed
+        desc: The value ranges from 0.2 to 3. The default value is `1`
+        required: false
+      - name: pitch
+        desc: The value ranges from 0.1 to 3. The default value is `1`
+        required: false
+      - name: style
+        desc: To specify the emotion, the Predicted Emotion version defaults to the predicted value, and the Normal version defaults to the timbre default
+        enums: [ customer_service,professional,serious,narrator,narrator_immersive,comfort,lovey-dovey,energetic,conniving,tsundere,charming,storytelling,radio,yoga,advertising,assistant,chat ]
+        required: false
+
+  - flowId: huoshanTtsAsync
+    function: HuoshanTtsAsync
+    inputs:
+      - name: text
+        value:
+          type: SPEL
+          content: "#start[text]"
+      - name: format
+        value:
+          type: SPEL
+          content: "#start[format]"
+      - name: emotion
+        value:
+          type: SPEL
+          content: "#start[emotion]"
+      - name: voice_type
+        value:
+          type: SPEL
+          content: "#start[voice_type]"
+      - name: language
+        value:
+          type: SPEL
+          content: "#start[language]"
+      - name: sample_rate
+        value:
+          type: SPEL
+          content: "#start[sample_rate]"
+      - name: volume
+        value:
+          type: SPEL
+          content: "#start[volume]"
+      - name: speed
+        value:
+          type: SPEL
+          content: "#start[speed]"
+      - name: pitch
+        value:
+          type: SPEL
+          content: "#start[pitch]"
+      - name: style
+        value:
+          type: SPEL
+          content: "#start[style]"
+      - name: use_emotion_api
+        value:
+          type: SPEL
+          content: "#start[use_emotion_api]"
+    depends:
+      - start
+
+  - flowId: end
+    function: End
+    inputs:
+      - name: audio
+        value:
+          type: SPEL
+          content: "#huoshanTtsAsync[output]"
+    depends:
+      - huoshanTtsAsync

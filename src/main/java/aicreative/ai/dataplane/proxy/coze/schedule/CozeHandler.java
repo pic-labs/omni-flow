@@ -6,11 +6,7 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
@@ -32,7 +28,11 @@ public class CozeHandler {
     @Value("${proxy.coze.api.token}")
     private String cozeApiToken;
 
-    private final RestTemplate restTemplate = new RestTemplate();
+    private final RestTemplate restTemplate;
+
+    public CozeHandler(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
 
     public String request(String workflowId, Object param) {
         HttpHeaders headers = new HttpHeaders();

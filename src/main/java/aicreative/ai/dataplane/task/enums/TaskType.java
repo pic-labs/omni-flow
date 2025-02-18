@@ -5,7 +5,8 @@ import java.util.Objects;
 public enum TaskType {
 
     CozeWorkflow,
-    DeepSeekWorkflow;
+    DeepSeekWorkflow,
+    HuoshanTtsAsync;
 
     public static TaskType fromName(String name) {
         for (TaskType taskType : TaskType.values()) {
